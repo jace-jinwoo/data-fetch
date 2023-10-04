@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -21,7 +21,7 @@ function App() {
   //     releaseDate: '2021-05-19',
   //   },
   // ];
-  async function fetchMoviesHandler() {
+  const fetchMoviesHandler = React.useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
@@ -45,7 +45,11 @@ function App() {
       setError(error.message);
     }
     setIsLoading(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
 
   return (
     <React.Fragment>
